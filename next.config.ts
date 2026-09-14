@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
-// GitHub Pages serves the site under /TutorVerse.
-// Vercel serves the site at the domain root. Requiring GitHub Actions here
-// prevents any Vercel project environment variable from accidentally applying
-// the GitHub Pages base path.
+// TutorVerse uses GitHub Pages only for the static preview. Vercel serves at the domain root.
 const isGitHubPages =
   process.env.GITHUB_ACTIONS === "true" && process.env.GITHUB_PAGES === "true";
 
