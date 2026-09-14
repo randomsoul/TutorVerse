@@ -3,14 +3,16 @@ export type Tutor = {
 };
 
 export const tutors: Tutor[] = [
- {id:'t1',name:'Aarav Mehta',initials:'AM',subject:'Physics',subjects:['Physics','Mathematics'],classes:['Class 11','Class 12','JEE'],board:'CBSE',city:'Mumbai',mode:'Online + Offline',experience:9,rating:4.9,reviews:128,price:850,bio:'Concept-first Physics mentor specialising in JEE preparation, problem solving and exam strategy.',accent:'violet'},
- {id:'t2',name:'Priya Nair',initials:'PN',subject:'Mathematics',subjects:['Mathematics'],classes:['Class 8','Class 9','Class 10','Class 11'],board:'CBSE',city:'Bengaluru',mode:'Online',experience:7,rating:4.8,reviews:96,price:650,bio:'Patient mathematics educator who turns difficult chapters into simple, repeatable methods.',accent:'cyan'},
- {id:'t3',name:'Rohan Kulkarni',initials:'RK',subject:'Chemistry',subjects:['Chemistry','JEE'],classes:['Class 11','Class 12','JEE'],board:'CBSE',city:'Pune',mode:'Online',experience:11,rating:4.9,reviews:174,price:900,bio:'Organic and physical chemistry specialist with a strong focus on competitive-exam problem solving.',accent:'amber'},
- {id:'t4',name:'Sneha Iyer',initials:'SI',subject:'Biology',subjects:['Biology','NEET'],classes:['Class 11','Class 12','NEET'],board:'ICSE',city:'Chennai',mode:'Online',experience:8,rating:4.8,reviews:83,price:700,bio:'NEET Biology coach using visual explanations, active recall and structured revision.',accent:'emerald'},
- {id:'t5',name:'Kabir Shah',initials:'KS',subject:'Computer Science',subjects:['Computer Science','Mathematics'],classes:['Class 9','Class 10','Class 11','Class 12'],board:'ICSE',city:'Mumbai',mode:'Online',experience:6,rating:4.7,reviews:61,price:600,bio:'Computer Science tutor for school students, Python fundamentals and logical thinking.',accent:'blue'},
- {id:'t6',name:'Ananya Rao',initials:'AR',subject:'English',subjects:['English'],classes:['Class 6','Class 7','Class 8','Class 9','Class 10'],board:'CBSE',city:'Hyderabad',mode:'Online + Offline',experience:10,rating:4.9,reviews:112,price:550,bio:'English language and literature teacher focused on confidence, writing and comprehension.',accent:'rose'},
+ {id:'t1',name:'Aarav Mehta',initials:'AM',subject:'Physics',subjects:['Physics','Mathematics'],classes:['Class 11','Class 12'],board:'CBSE',city:'Mumbai',mode:'Online + Offline',experience:9,rating:4.9,reviews:128,price:850,bio:'Demo profile: concept-first Physics mentor specialising in JEE preparation, problem solving and exam strategy.',accent:'violet'},
+ {id:'t2',name:'Priya Nair',initials:'PN',subject:'Mathematics',subjects:['Mathematics'],classes:['Class 8','Class 9','Class 10','Class 11'],board:'CBSE',city:'Bengaluru',mode:'Online',experience:7,rating:4.8,reviews:96,price:650,bio:'Demo profile: patient mathematics educator who turns difficult chapters into simple, repeatable methods.',accent:'cyan'},
+ {id:'t3',name:'Rohan Kulkarni',initials:'RK',subject:'Chemistry',subjects:['Chemistry'],classes:['Class 11','Class 12'],board:'CBSE',city:'Pune',mode:'Online',experience:11,rating:4.9,reviews:174,price:900,bio:'Demo profile: Organic and physical chemistry specialist with a strong focus on competitive-exam problem solving.',accent:'amber'},
+ {id:'t4',name:'Sneha Iyer',initials:'SI',subject:'Biology',subjects:['Biology'],classes:['Class 11','Class 12'],board:'ICSE',city:'Chennai',mode:'Online',experience:8,rating:4.8,reviews:83,price:700,bio:'Demo profile: NEET Biology coach using visual explanations, active recall and structured revision.',accent:'emerald'},
+ {id:'t5',name:'Kabir Shah',initials:'KS',subject:'Computer Science',subjects:['Computer Science','Mathematics'],classes:['Class 9','Class 10','Class 11','Class 12'],board:'ICSE',city:'Mumbai',mode:'Online',experience:6,rating:4.7,reviews:61,price:600,bio:'Demo profile: Computer Science tutor for school students, Python fundamentals and logical thinking.',accent:'blue'},
+ {id:'t6',name:'Ananya Rao',initials:'AR',subject:'English',subjects:['English'],classes:['Class 6','Class 7','Class 8','Class 9','Class 10'],board:'CBSE',city:'Hyderabad',mode:'Online + Offline',experience:10,rating:4.9,reviews:112,price:550,bio:'Demo profile: English language and literature teacher focused on confidence, writing and comprehension.',accent:'rose'},
 ];
 
-export const subjects = ['Mathematics','Physics','Chemistry','Biology','English','Computer Science','JEE','NEET'];
-export const classes = ['Class 6','Class 7','Class 8','Class 9','Class 10','Class 11','Class 12','JEE','NEET'];
-export const boards = ['CBSE','ICSE','State Board','IB'];
+export const subjects = ['Mathematics','Physics','Chemistry','Biology','English','Computer Science'];
+export const competitiveExams = ['JEE Main','JEE Advanced','NEET','MHT-CET','BITSAT','NDA','NATA','RMS','AISSEE','IMO','JSO'];
+export const classes = ['Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8','Class 9','Class 10','Class 11','Class 12'];
+export const boards = ['CBSE','ICSE','Maharashtra State Board','IB','IGCSE'];
+export const teachingModes = ['Batch tuition','Home tuition','Online tuition'];
