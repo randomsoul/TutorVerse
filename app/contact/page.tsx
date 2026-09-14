@@ -1,12 +1,16 @@
 'use client';
-import { Suspense, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Header, Footer } from '../components/site';
 
 function ContactForm(){
-  const params=useSearchParams();
-  const tutor=params.get('tutor');
+  const [tutor,setTutor]=useState('');
   const [done,setDone]=useState(false);
+
+  useEffect(()=>{
+    const value=new URLSearchParams(window.location.search).get('tutor');
+    if(value) setTutor(value);
+  },[]);
+
   return <>
     <Header/>
     <main className="form-page">
@@ -22,5 +26,5 @@ function ContactForm(){
 }
 
 export default function Contact(){
-  return <Suspense fallback={<><Header/><main className="form-page"><div className="form-card">Loading…</div></main><Footer/></>}><ContactForm/></Suspense>;
+  return <ContactForm/>;
 }
