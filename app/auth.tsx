@@ -4,21 +4,17 @@ import Link from 'next/link';
 import { Header, Footer } from './components/site';
 
 function Auth({ signup = false }) {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [done, setDone] = useState(false);
-
-  function submit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.includes('@')) return alert('Please enter a valid email.');
-    localStorage.setItem('tutorverse_user', JSON.stringify({ name: name || email.split('@')[0], email }));
-    setDone(true);
+  const [email,setEmail]=useState(''); const [name,setName]=useState(''); const [password,setPassword]=useState(''); const [role,setRole]=useState<'student'|'parent'|'tutor'|'admin'>('student'); const [error,setError]=useState(''); const [done,setDone]=useState(false);
+  function submit(e:React.FormEvent){e.preventDefault();setError('');
+    if(role==='admin'){
+      // DEMO ONLY: this static GitHub Pages preview cannot safely store production credentials. Supabase Auth will replace this check before launch.
+      if(email.trim().toLowerCase()==='admin' && password==='Sam123#@!'){localStorage.setItem('tutorverse_session',JSON.stringify({name:'Saral Vigyan Admin',role:'admin'}));window.location.href='/admin';return;}
+      setError('Admin login failed. Use username admin and the supplied demo password.');return;
+    }
+    if(!email.includes('@')){setError('Please enter a valid email.');return;}
+    localStorage.setItem('tutorverse_session',JSON.stringify({name:name||email.split('@')[0],email,role})); setDone(true);
   }
-
-  if (done) return <><Header/><main className="auth"><div className="auth-card"><div className="success">✓</div><h1>You're in.</h1><p>Your TutorVerse account has been saved on this device. The next step is connecting Supabase for production authentication.</p><Link href="/tutors" className="btn primary full">Find a tutor →</Link></div></main><Footer/></>;
-
-  return <><Header/><main className="auth"><form className="auth-card" onSubmit={submit}><div className="eyebrow">TutorVerse account</div><h1>{signup ? 'Create your account' : 'Welcome back.'}</h1><p>{signup ? 'Start your learning journey.' : 'Log in to continue your learning journey.'}</p>{signup && <label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your name" required/></label>}<label>Email<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></label><label>Password<input type="password" placeholder="••••••••" minLength={6} required/></label><button className="btn primary full">{signup ? 'Create account' : 'Log in'} →</button><p className="switch">{signup ? 'Already have an account? ' : 'New to TutorVerse? '}<Link href={signup ? '/login' : '/signup'}>{signup ? 'Log in' : 'Create one'}</Link></p></form></main><Footer/></>;
+  if(done) return <><Header/><main className="auth"><div className="auth-card"><div className="success">✓</div><h1>Account ready.</h1><p>This preview stores the session locally. Production login, password reset, parent/student linking and role permissions will be handled by Supabase Auth.</p><Link href={role==='parent'?'/parent-dashboard':role==='student'?'/student-dashboard':role==='tutor'?'/student-dashboard':'/admin'} className="btn primary full">Continue to dashboard →</Link></div></main><Footer/></>;
+  return <><Header/><main className="auth"><form className="auth-card" onSubmit={submit}><div className="eyebrow">TutorVerse secure access</div><h1>{signup?'Create your account':'Welcome back.'}</h1><p>{signup?'Choose the role that matches your relationship with TutorVerse.':'Students, parents, tutors and Saral Vigyan staff use the same entry point.'}</p>{signup&&<label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" required/></label>}<label>Account type<select value={role} onChange={e=>setRole(e.target.value as typeof role)}><option value="student">Student</option><option value="parent">Parent</option><option value="tutor">Tutor</option><option value="admin">Saral Vigyan Admin</option></select></label><label>{role==='admin'?'Admin username':'Email'}<input type={role==='admin'?'text':'email'} value={email} onChange={e=>setEmail(e.target.value)} placeholder={role==='admin'?'admin':'you@example.com'} required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••••" minLength={role==='admin'?1:6} required/></label>{error&&<p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn primary full">{signup?'Create account':'Log in'} →</button><p className="switch">{signup?'Already have an account? ':'New to TutorVerse? '}<Link href={signup?'/login':'/signup'}>{signup?'Log in':'Create one'}</Link></p></form></main><Footer/></>;
 }
-
-export function Login(){ return <Auth/>; }
-export function Signup(){ return <Auth signup/>; }
+export function Login(){return <Auth/>;} export function Signup(){return <Auth signup/>;}
