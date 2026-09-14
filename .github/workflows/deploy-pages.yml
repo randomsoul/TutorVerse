@@ -28,6 +28,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build static site
+        env:
+          GITHUB_PAGES: "true"
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
