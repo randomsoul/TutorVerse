@@ -22,7 +22,7 @@ function Auth({ signup = false }: { signup?: boolean }) {
     setBusy(true)
 
     try {
-      if (role === 'admin') {
+      if (signup && role === 'admin') {
         setError('Admin accounts are created and managed by Saral Vigyan. Use an administrator account created in Supabase Auth.')
         return
       }
@@ -41,11 +41,26 @@ function Auth({ signup = false }: { signup?: boolean }) {
         if (signUpError) throw signUpError
         setDone(true)
       } else {
-        const { error: signInError } = await supabase.auth.signInWithPassword({
+        const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
           email: email.trim(),
           password,
         })
         if (signInError) throw signInError
+
+        if (role === 'admin') {
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', authData.user.id)
+            .maybeSingle()
+          if (profileError || !profile || !['admin', 'staff'].includes(profile.role)) {
+            await supabase.auth.signOut()
+            throw new Error('This account is not authorised for the Saral Vigyan admin area.')
+          }
+          window.location.href = '/admin'
+          return
+        }
+
         const destination = role === 'parent' ? '/parent-dashboard' : role === 'student' ? '/student-dashboard' : '/tutor-dashboard'
         window.location.href = destination
       }
