@@ -1,62 +1,39 @@
 import Link from 'next/link';
 import { Header, Footer } from './components/site';
 
-const services = [
-  { title: 'Batch Tuition', sub: 'Structured learning. Stronger results.', icon: '👥', tone: 'bg-emerald-50 text-emerald-700', image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=85' },
-  { title: 'Home Tuition', sub: 'One-to-one attention at your home.', icon: '⌂', tone: 'bg-blue-50 text-blue-700', image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=700&q=85' },
-  { title: 'Online Tuition', sub: 'Learn from anywhere. Same great quality.', icon: '▣', tone: 'bg-purple-50 text-purple-700', image: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=700&q=85' },
-  { title: 'For Students & Parents', sub: 'Track progress, get regular updates.', icon: '👥', tone: 'bg-amber-50 text-amber-700', image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=700&q=85' },
+const cards = [
+  { title: 'Batch Tuition', text: 'Structured classes with focused teaching and regular academic support.', image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=88' },
+  { title: 'Home Tuition', text: 'One-to-one attention at home, coordinated around the student.', image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=88' },
+  { title: 'Online Tuition', text: 'Live classes through Google Meet, wherever the student is.', image: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1200&q=88' },
+  { title: 'Students & Parents', text: 'Calendar, attendance, reports, homework and updates in one place.', image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=1200&q=88' },
 ];
 const exams = ['JEE Main & Advanced','NEET','MHT-CET','BITSAT','NDA','NATA','RMS','AISSEE','IMO','JSO'];
-const examIcons = ['⚛','♧','▥','⚙','◆','◢','▤','●','🏆','⚗'];
 
 export default function Home() {
-  return <div className="min-h-screen bg-white text-[#10243a]"><Header /><main>
-    <section className="relative overflow-hidden bg-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_35%,#e9f7ef_0,transparent_42%)]" />
-      <div className="relative mx-auto grid max-w-[1280px] items-center lg:grid-cols-[47%_53%]">
-        <div className="px-7 py-12 sm:px-10 lg:py-14 lg:pr-4">
-          <h1 className="text-[48px] font-extrabold leading-[1.03] tracking-[-.045em] sm:text-[60px] lg:text-[58px] xl:text-[64px]">Better Teaching.<br /><span className="text-[#168b50]">Brighter Futures.</span></h1>
-          <p className="mt-5 max-w-[610px] text-[18px] leading-7 text-[#203247] sm:text-[20px]">Trusted home, online and batch tuition for school subjects and competitive exams.</p>
-          <div className="mt-7 grid max-w-[560px] grid-cols-3 border-y border-[#e8edf0] py-4 text-center">
-            <div className="border-r border-[#e8edf0]"><div className="text-3xl text-[#f59a16]">♟</div><b className="text-sm">Experienced<br />Tutors</b></div>
-            <div className="border-r border-[#e8edf0]"><div className="text-3xl text-[#2779cf]">↗</div><b className="text-sm">Personalised<br />Learning</b></div>
-            <div><div className="text-3xl text-[#169554]">★</div><b className="text-sm">Proven<br />Results</b></div>
-          </div>
-          <div className="mt-7 flex flex-wrap gap-3"><Link href="/demo" className="rounded-xl bg-[#199754] px-7 py-4 font-extrabold text-white shadow-lg shadow-green-100">Schedule a Free Demo Class&nbsp; →</Link><Link href="/tutors" className="rounded-xl border-2 border-[#199754] bg-white px-7 py-4 font-extrabold text-[#166e45]">Find a Tutor</Link></div>
-          <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-sm font-semibold text-[#203247]"><span>📍 Serving Mumbai</span><span>|</span><span>Navi Mumbai</span><span>|</span><span>Thane</span><span>|</span><span>Online (All India)</span></div>
-        </div>
-        <div className="relative min-h-[520px] overflow-hidden lg:min-h-[565px]">
-          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=88" alt="Student studying" className="absolute inset-0 h-full w-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/5 to-transparent lg:from-white/100 lg:via-white/10" />
-          <div className="absolute right-5 top-6 rounded-2xl bg-[#fff8cf]/95 px-4 py-3 shadow-md"><p className="text-xs font-black text-[#274056]">Good Students</p><p className="text-xs font-black text-[#168b50]">Brighter Tomorrows</p></div>
-          <div className="absolute bottom-5 left-5 right-5 hidden rounded-2xl bg-white/92 p-4 shadow-xl backdrop-blur-sm sm:block lg:left-10 lg:right-10"><b className="text-xs uppercase tracking-wider text-[#168b50]">Your learning journey</b><p className="mt-1 font-extrabold">Simple. Personal. Managed.</p></div>
-        </div>
-      </div>
-    </section>
+ return <div className="min-h-screen bg-[#fbfcfa] text-[#18304a]"><Header/><main>
+  <section className="mx-auto max-w-[1180px] px-5 pt-7 sm:px-8">
+   <div className="relative overflow-hidden rounded-[30px] bg-[#edf8f0] px-7 py-9 sm:px-11 sm:py-11 lg:px-14">
+    <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[#ffe8a8]/70 blur-2xl"/><div className="absolute bottom-[-100px] left-1/3 h-64 w-64 rounded-full bg-[#d5ecff]/70 blur-2xl"/>
+    <div className="relative grid items-center gap-8 lg:grid-cols-[1.08fr_.92fr]">
+     <div><span className="inline-flex rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[.12em] text-[#178950] shadow-sm">TutorVerse · Powered by Saral Vigyan</span>
+      <h1 className="mt-5 text-[44px] font-black leading-[.98] tracking-[-.055em] sm:text-[58px]">Better Teaching.<br/><span className="text-[#168b50]">Brighter Futures.</span></h1>
+      <p className="mt-4 max-w-xl text-base leading-7 text-[#40546a] sm:text-lg">Trusted home, online and batch tuition for school subjects and competitive exams.</p>
+      <div className="mt-6 flex flex-wrap gap-3"><Link href="/demo" className="rounded-xl bg-[#199754] px-6 py-3.5 font-extrabold text-white shadow-lg">Schedule a Free Demo Class →</Link><Link href="/tutors" className="rounded-xl border-2 border-[#199754] bg-white px-6 py-3.5 font-extrabold text-[#166e45]">Find a Tutor</Link></div>
+      <div className="mt-5 text-sm font-bold text-[#526579]">📍 Mumbai &nbsp;•&nbsp; Navi Mumbai &nbsp;•&nbsp; Thane &nbsp;•&nbsp; Online (All India)</div>
+     </div>
+     <div className="relative hidden lg:block"><div className="overflow-hidden rounded-[26px] border-[7px] border-white shadow-[0_24px_55px_rgba(39,79,56,.18)]"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1000&q=88" alt="Student learning" className="h-[330px] w-full object-cover"/></div><div className="absolute -bottom-4 -left-5 rounded-2xl bg-white px-5 py-3 shadow-xl"><b className="text-sm text-[#168b50]">Simple. Personal. Managed.</b></div></div>
+    </div>
+   </div>
+  </section>
 
-    <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-4 px-6 py-5 sm:grid-cols-2 lg:grid-cols-4">
-      {services.map((s)=><Link href={s.title==='Home Tuition'?'/tutors':'/subjects'} key={s.title} className={`group overflow-hidden rounded-2xl p-2 shadow-sm ring-1 ring-black/5 ${s.tone.split(' ')[0]}`}><img src={s.image} alt="" className="h-36 w-full rounded-xl object-cover transition group-hover:scale-[1.02]" /><div className="px-4 pb-4 pt-3"><span className={`inline-grid h-10 w-10 place-items-center rounded-full bg-white text-xl shadow ${s.tone.split(' ')[1]}`}>{s.icon}</span><h2 className="mt-3 text-xl font-extrabold text-[#10243a]">{s.title}</h2><p className="mt-1 text-sm leading-5 text-[#203247]">{s.sub}</p><span className="mt-2 inline-block text-xl">→</span></div></Link>)}
-    </section>
+  <section className="mx-auto max-w-[1180px] px-5 py-8 sm:px-8 sm:py-10"><div className="mb-5 flex items-end justify-between"><div><span className="text-xs font-black uppercase tracking-[.16em] text-[#168b50]">Choose your learning mode</span><h2 className="mt-2 text-3xl font-black tracking-[-.04em] sm:text-4xl">Learning designed around you.</h2></div></div>
+   <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{cards.map((c,i)=><Link href={i===1?'/tutors':'/subjects'} key={c.title} className="group overflow-hidden rounded-[24px] border border-[#e0e8e3] bg-white shadow-[0_8px_28px_rgba(26,55,42,.06)]"><div className="overflow-hidden"><img src={c.image} alt="" className="h-48 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-52"/></div><div className="p-5"><div className="flex items-center justify-between"><h3 className="text-xl font-black">{c.title}</h3><span className="grid h-9 w-9 place-items-center rounded-full bg-[#eaf7ee] text-lg font-black text-[#168b50]">→</span></div><p className="mt-2 text-sm leading-6 text-[#617185]">{c.text}</p></div></Link>)}</div>
+  </section>
 
-    <section className="relative overflow-hidden bg-[#eef8ff] px-6 py-12 sm:py-14">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,#dff2ff,transparent_40%)]" />
-      <div className="relative mx-auto max-w-[1220px]">
-        <div className="flex items-start gap-4"><div className="text-5xl">🏆</div><div><h2 className="text-3xl font-extrabold tracking-[-.03em] sm:text-4xl">Prepare for <span className="text-[#168b50]">Top Competitive Exams</span></h2><p className="mt-2 text-lg">Guidance and subject support from experienced faculty.</p></div></div>
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-5 lg:grid-cols-10">{exams.map((e,i)=><Link href="/subjects" key={e} className="rounded-xl bg-white px-2 py-4 text-center shadow-sm ring-1 ring-[#dfeaf2] transition hover:-translate-y-1"><div className="text-2xl">{examIcons[i]}</div><div className="mt-2 text-xs font-extrabold leading-4">{e}</div></Link>)}</div>
-      </div>
-    </section>
+  <section className="bg-[#eaf5ff] py-12 sm:py-14"><div className="mx-auto max-w-[1180px] px-5 sm:px-8"><div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><span className="text-xs font-black uppercase tracking-[.16em] text-[#2876c6]">Competitive preparation</span><h2 className="mt-2 text-3xl font-black tracking-[-.04em] sm:text-4xl">Prepare for your next goal.</h2><p className="mt-2 text-[#53677b]">Experienced faculty and structured subject support.</p></div><Link href="/subjects" className="font-extrabold text-[#168b50]">View all subjects →</Link></div><div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-5 lg:grid-cols-10">{exams.map((e,i)=><Link href="/subjects" key={e} className="rounded-2xl border border-[#d8e8f4] bg-white px-3 py-5 text-center shadow-sm transition hover:-translate-y-1"><span className="text-2xl font-black text-[#168b50]">{String(i+1).padStart(2,'0')}</span><div className="mt-2 text-xs font-black leading-4">{e}</div></Link>)}</div></div></section>
 
-    <section className="relative overflow-hidden border-y border-[#e4ebef]">
-      <div className="absolute inset-0 bg-[#f7fbfd]" />
-      <div className="relative mx-auto grid max-w-[1280px] items-center lg:grid-cols-[43%_57%]">
-        <div className="h-[250px] bg-cover bg-center lg:h-[290px]" style={{backgroundImage:"url('https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1000&q=85')"}} />
-        <div className="px-7 py-10 sm:px-12"><h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">Let’s Build<br /><span className="text-[#168b50]">A Brighter Tomorrow</span><br />Together</h2><p className="mt-3 max-w-md text-sm text-[#526273]">No obligation. Just a conversation about your child’s goals.</p><Link href="/demo" className="mt-5 inline-flex rounded-xl bg-[#199754] px-6 py-3.5 font-extrabold text-white">Schedule a Free Demo Class&nbsp; →</Link></div>
-      </div>
-    </section>
+  <section className="mx-auto max-w-[1180px] px-5 py-10 sm:px-8 sm:py-14"><div className="grid overflow-hidden rounded-[28px] bg-[#fff7df] md:grid-cols-[.82fr_1.18fr]"><div className="min-h-[250px] overflow-hidden md:min-h-[300px]"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=88" alt="Students in a classroom" className="h-full w-full object-cover"/></div><div className="flex flex-col justify-center px-7 py-9 sm:px-11"><span className="text-xs font-black uppercase tracking-[.16em] text-[#d98209]">A little support goes a long way</span><h2 className="mt-3 text-3xl font-black leading-tight sm:text-4xl">Let’s Build<br/><span className="text-[#168b50]">A Brighter Tomorrow</span><br/>Together</h2><p className="mt-3 max-w-md text-sm leading-6 text-[#667487]">Tell us what the student needs. Our team will understand the requirement and coordinate the next step.</p><Link href="/demo" className="mt-5 inline-flex w-fit rounded-xl bg-[#199754] px-6 py-3.5 font-extrabold text-white">Schedule a Free Demo Class →</Link></div></div></section>
 
-    <section className="mx-auto grid max-w-[1280px] grid-cols-2 gap-6 px-7 py-8 sm:grid-cols-4 sm:py-10">
-      {[['♣','Trusted by Students','and Parents'],['↗','Focus on Concept Clarity','and Real Understanding'],['◆','Safe, Supportive','Learning Environment'],['♥','Committed to','Long-term Success']].map(([i,a,b])=><div key={a} className="flex items-start gap-3"><span className="text-3xl text-[#168b50]">{i}</span><div className="text-sm font-bold">{a}<br />{b}</div></div>)}
-    </section>
-  </main><Footer /></div>;
+  <section className="border-y border-[#e2e9e4] bg-white"><div className="mx-auto grid max-w-[1180px] grid-cols-2 sm:grid-cols-4">{[['01','Experienced Tutors'],['02','Personalised Learning'],['03','Regular Parent Updates'],['04','Managed Learning Journey']].map(([n,t],i)=><div key={n} className={`px-5 py-7 text-center ${i?'border-l border-[#e2e9e4]':''}`}><div className="text-2xl font-black text-[#168b50]">{n}</div><p className="mt-1 text-xs font-bold text-[#667487]">{t}</p></div>)}</div></section>
+ </main><Footer/></div>
 }
