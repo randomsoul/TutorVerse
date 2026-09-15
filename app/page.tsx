@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Header, Footer } from './components/site';
-import AIChat from './components/ai-chat';
 
 const cards=[
   ['01','Batch Tuition','Structured batches for school and competitive preparation.'],
@@ -15,6 +14,5 @@ export default function Home(){return <><Header/><main>
   <div className="rounded-[32px] border border-slate-200 bg-white p-5 shadow-xl shadow-slate-200/50"><div className="rounded-[26px] bg-slate-950 p-7 text-white"><div className="flex items-center justify-between"><span className="text-xs font-black uppercase tracking-[.2em] text-slate-400">Start here</span><span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold">Free demo</span></div><h2 className="mt-8 text-3xl font-black tracking-tight">One simple request.</h2><div className="mt-6 grid gap-3"><div className="rounded-2xl bg-white/10 p-4"><b>1.</b> Tell us about the student</div><div className="rounded-2xl bg-white/10 p-4"><b>2.</b> Pick a convenient time</div><div className="rounded-2xl bg-white/10 p-4"><b>3.</b> Our team confirms the demo</div></div><Link href="/demo" className="mt-6 block rounded-2xl bg-white px-5 py-4 text-center font-black text-slate-950">Schedule your free demo</Link></div></div>
 </section>
 <section className="mx-auto grid max-w-7xl gap-4 px-5 pb-8 sm:grid-cols-2 lg:grid-cols-4">{cards.map(c=><article key={c[0]} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><span className="text-xs font-black text-[#087ee8]">{c[0]}</span><h3 className="mt-8 text-xl font-black tracking-tight">{c[1]}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{c[2]}</p></article>)}</section>
-<section className="mx-auto max-w-7xl px-5 py-12"><div className="rounded-[32px] border border-blue-100 bg-blue-50 p-8 sm:p-10"><div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"><div><p className="eyebrow">Need help?</p><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950">Ask TutorVerse.</h2><p className="mt-2 max-w-xl text-slate-600">Our assistant can answer common questions about tuition, exams, classes and parent support.</p></div><button onClick={()=>window.dispatchEvent(new CustomEvent('open-tutorverse-chat'))} className="rounded-2xl bg-slate-950 px-6 py-4 font-black text-white">Ask TutorVerse AI ✦</button></div></div></section>
 <section className="mx-auto max-w-7xl px-5 pb-16"><div className="rounded-[32px] bg-slate-950 p-8 text-white sm:p-10"><div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between"><div><h2 className="text-3xl font-black tracking-tight">Ready to begin?</h2><p className="mt-2 text-slate-400">Start with a free demo. No tutor selection is required at this stage.</p></div><Link href="/demo" className="rounded-2xl bg-white px-6 py-4 font-black text-slate-950">Schedule a Free Demo →</Link></div></div></section>
-</main><Footer/><AIChat/></>}
+</main><Footer/></>}
