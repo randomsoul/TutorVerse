@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { Header, Footer } from '../components/site'
 import { supabase } from '../../lib/supabase'
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://tutorverse.in'
+
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
   const [busy, setBusy] = useState(false)
@@ -19,7 +21,7 @@ export default function ForgotPasswordPage() {
 
     try {
       if (!email.includes('@')) throw new Error('Please enter a valid email.')
-      const redirectTo = `${window.location.origin}/update-password`
+      const redirectTo = `${SITE_URL.replace(/\/$/, '')}/update-password`
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo })
       if (resetError) throw resetError
       setMessage('If this email belongs to a TutorVerse account, a password-reset email has been sent. Open that email and follow the link.')
