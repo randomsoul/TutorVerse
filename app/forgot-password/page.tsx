@@ -5,7 +5,10 @@ import Link from 'next/link'
 import { Header, Footer } from '../components/site'
 import { supabase } from '../../lib/supabase'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://tutorverse.in'
+// Keep password recovery tied to the actual production deployment while
+// tutorverse.in is still being connected. This deliberately ignores any
+// stale NEXT_PUBLIC_SITE_URL value that may still point to localhost.
+const PASSWORD_RESET_URL = 'https://tutor-verse-kappa.vercel.app/update-password'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
@@ -21,8 +24,9 @@ export default function ForgotPasswordPage() {
 
     try {
       if (!email.includes('@')) throw new Error('Please enter a valid email.')
-      const redirectTo = `${SITE_URL.replace(/\/$/, '')}/update-password`
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo })
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: PASSWORD_RESET_URL,
+      })
       if (resetError) throw resetError
       setMessage('If this email belongs to a TutorVerse account, a password-reset email has been sent. Open that email and follow the link.')
     } catch (err) {
