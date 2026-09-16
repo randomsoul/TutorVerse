@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Header, Footer } from './components/site';
+import AIChat from './components/ai-chat';
 
 const modes = [
   { title: 'Batch Tuition', text: 'Structured learning. Stronger concepts.', image: 'https://images.unsplash.com/photo-1629306262232-1f854b4b0b13?auto=format&fit=crop&w=1400&q=90', icon: 'B', tone: 'bg-[#dff5e8]', accent: 'text-[#168b50]' },
@@ -59,5 +60,5 @@ export default function Home() {
     <section className="mx-auto max-w-[1180px] px-5 py-8 sm:px-8 sm:py-10"><div className="grid overflow-hidden rounded-[26px] bg-[#eef7fc] shadow-[0_8px_28px_rgba(26,55,73,.06)] md:grid-cols-[1.08fr_.92fr]"><div className="min-h-[250px] overflow-hidden md:min-h-[285px]"><img src="https://cdn5.planetspark.in/media/large_u1228994638_A_fair_young_Indian_child_around_10_years_old_stu_e5b25308_3088_4cce_b3c4_9d2225016496_1_d45af394a0.png" alt="One-to-one parent-supported learning at home" className="h-full w-full object-cover"/></div><div className="flex flex-col justify-center px-7 py-8 sm:px-10"><p className="text-xs font-black uppercase tracking-[.15em] text-[#168b50]">A managed learning experience</p><h2 className="mt-2 text-3xl font-black leading-tight text-[#183a5b]">Let’s Build<br/><span className="text-[#168b50]">A Brighter Tomorrow</span><br/>Together</h2><p className="mt-3 text-sm leading-6 text-[#53687c]">No obligation. Just a conversation about your child’s goals.</p><Link href="/demo" className="mt-5 inline-flex w-fit rounded-xl bg-[#199754] px-6 py-3.5 font-extrabold text-white shadow-md">Schedule a Free Demo Class&nbsp; →</Link></div></div></section>
 
     <section className="border-y border-[#e2e8e5] bg-white"><div className="mx-auto grid max-w-[1180px] grid-cols-2 sm:grid-cols-4">{trust.map(([n,a,b],i)=><div key={a} className={`flex items-center gap-3 px-4 py-6 sm:px-6 ${i?'border-l border-[#e2e8e5]':''}`}><div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#edf4ef] text-xs font-black text-[#168b50]">{n}</div><div className="text-xs font-black leading-4 text-[#18304a]">{a}<br/>{b}</div></div>)}</div></section>
-  </main><Footer/></div>;
+  </main><AIChat/><Footer/></div>;
 }
