@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Header, Footer } from './components/site'
 import { supabase } from '../lib/supabase'
 
-type Role = 'student' | 'parent' | 'tutor' | 'admin'
+type Role = 'student' | 'parent' | 'tutor' | 'manager' | 'admin'
 
 function Auth({ signup = false }: { signup?: boolean }) {
   const [email, setEmail] = useState('')
@@ -47,18 +47,43 @@ function Auth({ signup = false }: { signup?: boolean }) {
         })
         if (signInError) throw signInError
 
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('role, is_active, archived_at')
+          .eq('id', authData.user.id)
+          .maybeSingle()
+
+        if (profileError || !profile) {
+          await supabase.auth.signOut()
+          throw new Error('Your TutorVerse account profile could not be verified.')
+        }
+
+        if (profile.is_active === false || profile.archived_at) {
+          await supabase.auth.signOut()
+          throw new Error('This account is inactive or archived. Please contact Saral Vigyan.')
+        }
+
         if (role === 'admin') {
-          const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', authData.user.id)
-            .maybeSingle()
-          if (profileError || !profile || !['admin', 'staff'].includes(profile.role)) {
+          if (!['admin', 'staff'].includes(profile.role)) {
             await supabase.auth.signOut()
             throw new Error('This account is not authorised for the Saral Vigyan admin area.')
           }
           window.location.href = '/admin'
           return
+        }
+
+        if (role === 'manager') {
+          if (profile.role !== 'manager') {
+            await supabase.auth.signOut()
+            throw new Error('This account is not authorised as a Manager.')
+          }
+          window.location.href = '/admin'
+          return
+        }
+
+        if (profile.role !== role) {
+          await supabase.auth.signOut()
+          throw new Error(`This account is registered as ${profile.role}, not ${role}. Please select the correct account type.`)
         }
 
         const destination = role === 'parent' ? '/parent-dashboard' : role === 'student' ? '/student-dashboard' : '/tutor-dashboard'
@@ -75,7 +100,7 @@ function Auth({ signup = false }: { signup?: boolean }) {
     return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><div className="auth-card"><div className="success">✓</div><h1>Check your email.</h1><p>Your TutorVerse account has been created in Supabase. If email confirmation is enabled, open the confirmation email before logging in.</p><Link href="/login" className="btn primary full">Go to login →</Link></div></main><Footer/></>
   }
 
-  return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><form className="auth-card" onSubmit={submit}><div className="eyebrow">TutorVerse secure access</div><h1>{signup ? 'Create your account' : 'Welcome back.'}</h1><p>{signup ? 'Your account will be stored securely in TutorVerse.' : 'Sign in to your TutorVerse account.'}</p>{signup && <label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" required/></label>}<label>Account type<select value={role} onChange={e=>setRole(e.target.value as Role)}><option value="student">Student</option><option value="parent">Parent</option><option value="tutor">Tutor</option><option value="admin">Saral Vigyan Admin</option></select></label><label>{role === 'admin' ? 'Admin email' : 'Email'}<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••••" minLength={6} required/></label>{error&&<p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn primary full" disabled={busy}>{busy ? 'Please wait…' : signup ? 'Create account →' : 'Log in →'}</button>{!signup && <p className="switch"><Link href="/forgot-password">Forgot your password?</Link></p>}<p className="switch">{signup ? 'Already have an account? ' : 'New to TutorVerse? '}<Link href={signup ? '/login' : '/signup'}>{signup ? 'Log in' : 'Create one'}</Link></p></form></main><Footer/></>
+  return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><form className="auth-card" onSubmit={submit}><div className="eyebrow">TutorVerse secure access</div><h1>{signup ? 'Create your account' : 'Welcome back.'}</h1><p>{signup ? 'Your account will be stored securely in TutorVerse.' : 'Sign in to your TutorVerse account.'}</p>{signup && <label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" required/></label>}<label>Account type<select value={role} onChange={e=>setRole(e.target.value as Role)}><option value="student">Student</option><option value="parent">Parent</option><option value="tutor">Tutor</option><option value="manager">Manager</option><option value="admin">Saral Vigyan Admin</option></select></label><label>{role === 'admin' ? 'Admin email' : 'Email'}<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••••" minLength={6} required/></label>{error&&<p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn primary full" disabled={busy}>{busy ? 'Please wait…' : signup ? 'Create account →' : 'Log in →'}</button>{!signup && <p className="switch"><Link href="/forgot-password">Forgot your password?</Link></p>}<p className="switch">{signup ? 'Already have an account? ' : 'New to TutorVerse? '}<Link href={signup ? '/login' : '/signup'}>{signup ? 'Log in' : 'Create one'}</Link></p></form></main><Footer/></>
 }
 
 export function Login() { return <Auth /> }
