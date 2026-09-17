@@ -3,8 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Header, Footer } from './components/site'
-import Turnstile from './components/turnstile'
-import { verifyTurnstile } from '../lib/turnstile'
 import { supabase } from '../lib/supabase'
 
 type Role = 'student' | 'parent' | 'tutor' | 'manager' | 'admin'
@@ -14,7 +12,6 @@ function Auth({ signup = false }: { signup?: boolean }) {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [role, setRole] = useState<Role>('student')
-  const [captchaToken, setCaptchaToken] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState(false)
@@ -29,8 +26,6 @@ function Auth({ signup = false }: { signup?: boolean }) {
         setError('Admin accounts are created and managed by Saral Vigyan. Use an administrator account created in Supabase Auth.')
         return
       }
-      if (!captchaToken) throw new Error('Please complete the security check.')
-      await verifyTurnstile(captchaToken)
       if (!email.includes('@')) {
         setError('Please enter a valid email.')
         return
@@ -99,7 +94,7 @@ function Auth({ signup = false }: { signup?: boolean }) {
     return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><div className="auth-card"><div className="success">✓</div><h1>Check your email.</h1><p>Your TutorVerse account has been created in Supabase. If email confirmation is enabled, open the confirmation email before logging in.</p><Link href="/login" className="btn primary full">Go to login →</Link></div></main><Footer/></>
   }
 
-  return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><form className="auth-card" onSubmit={submit}><div className="eyebrow">TutorVerse secure access</div><h1>{signup ? 'Create your account' : 'Welcome back.'}</h1><p>{signup ? 'Your account will be stored securely in TutorVerse.' : 'Sign in to your TutorVerse account.'}</p>{signup && <label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" required/></label>}<label>Account type<select value={role} onChange={e=>setRole(e.target.value as Role)}><option value="student">Student</option><option value="parent">Parent</option><option value="tutor">Tutor</option><option value="manager">Manager</option><option value="admin">Saral Vigyan Admin</option></select></label><label>{role === 'admin' ? 'Admin email' : 'Email'}<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••••" minLength={6} required/></label><Turnstile onVerify={setCaptchaToken} onExpire={()=>setCaptchaToken('')} onError={()=>setCaptchaToken('')}/>{error&&<p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn primary full" disabled={busy}>{busy ? 'Please wait…' : signup ? 'Create account →' : 'Log in →'}</button>{!signup && <p className="switch"><Link href="/forgot-password">Forgot your password?</Link></p>}<p className="switch">{signup ? 'Already have an account? ' : 'New to TutorVerse? '}<Link href={signup ? '/login' : '/signup'}>{signup ? 'Log in' : 'Create one'}</Link></p></form></main><Footer/></>
+  return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><form className="auth-card" onSubmit={submit}><div className="eyebrow">TutorVerse secure access</div><h1>{signup ? 'Create your account' : 'Welcome back.'}</h1><p>{signup ? 'Your account will be stored securely in TutorVerse.' : 'Sign in to your TutorVerse account.'}</p>{signup && <label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" required/></label>}<label>Account type<select value={role} onChange={e=>setRole(e.target.value as Role)}><option value="student">Student</option><option value="parent">Parent</option><option value="tutor">Tutor</option><option value="manager">Manager</option><option value="admin">Saral Vigyan Admin</option></select></label><label>{role === 'admin' ? 'Admin email' : 'Email'}<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••••" minLength={6} required/></label>{error&&<p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn primary full" disabled={busy}>{busy ? 'Please wait…' : signup ? 'Create account →' : 'Log in →'}</button>{!signup && <p className="switch"><Link href="/forgot-password">Forgot your password?</Link></p>}<p className="switch">{signup ? 'Already have an account? ' : 'New to TutorVerse? '}<Link href={signup ? '/login' : '/signup'}>{signup ? 'Log in' : 'Create one'}</Link></p></form></main><Footer/></>
 }
 
 export function Login() { return <Auth /> }
