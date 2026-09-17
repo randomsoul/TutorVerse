@@ -25,12 +25,16 @@ export async function POST(request: Request) {
     const data = await result.json()
 
     if (!data.success) {
+      const errorCodes = Array.isArray(data['error-codes']) ? data['error-codes'] : []
       console.error('Turnstile verification failed', {
         status: result.status,
-        errorCodes: data['error-codes'] || [],
+        errorCodes,
         hostname: data.hostname || null,
       })
-      return NextResponse.json({ ok: false, error: 'Security verification failed. Please try again.' }, { status: 403 })
+      return NextResponse.json({
+        ok: false,
+        error: `Security verification failed. Cloudflare: ${errorCodes.join(', ') || 'unknown error'}`,
+      }, { status: 403 })
     }
 
     return NextResponse.json({ ok: true })
