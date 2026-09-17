@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
-function Brand(){return <Link href="/" aria-label="TutorVerse home" className="flex items-center gap-2"><img src="/tutorverse-logo.svg" alt="TutorVerse" className="block h-auto w-[180px] sm:w-[200px]"/></Link>}
-function FooterBrand(){return <Link href="/" aria-label="TutorVerse home" className="inline-flex items-center"><img src="/tutorverse-logo.svg" alt="TutorVerse" className="block h-auto w-[230px] sm:w-[260px]"/></Link>}
+function Brand(){return <Link href="/" aria-label="TutorVerse home" className="flex items-center gap-0.5 text-[30px] font-black tracking-[-1.8px] leading-none sm:text-[34px]"><span className="text-[#169B55]">Tutor</span><span className="text-[#17324D]">Verse</span></Link>}
+function FooterBrand(){return <Link href="/" aria-label="TutorVerse home" className="inline-flex items-center gap-0.5 text-[34px] font-black tracking-[-2px] leading-none"><span className="text-[#169B55]">Tutor</span><span className="text-white">Verse</span></Link>}
 function Saral(){return <div className="border-l border-[#dfe5e8] pl-4"><img src="/saralvigyan.svg" alt="Saral Vigyan" className="h-[52px] w-[245px] object-contain object-left"/></div>}
 function dashboardForRole(role:string){if(role==='admin'||role==='staff'||role==='manager')return '/admin';if(role==='parent')return '/parent-dashboard';if(role==='student')return '/student-dashboard';if(role==='tutor')return '/tutor-dashboard';return null}
 
