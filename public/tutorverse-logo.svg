@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 700" role="img" aria-labelledby="title desc">
+<title id="title">TutorVerse</title>
+<desc id="desc">TutorVerse wordmark with a graduation cap above the u and an upward arrow forming the right arm of the V.</desc>
+<g font-family="Arial, Helvetica, sans-serif" font-weight="900">
+  <text x="82" y="505" font-size="300" letter-spacing="-16" fill="#169B55">Tutor</text>
+  <path d="M1015 175 L1088 175 L1178 370 L1268 175 L1342 175 L1230 432 Q1212 466 1178 466 Q1144 466 1126 432 Z" fill="#17324D"/>
+  <path d="M1165 466 L1230 338 L1257 352 L1326 190 L1384 218 L1315 380 L1345 396 L1204 466 Z" fill="#169B55"/>
+  <text x="1340" y="505" font-size="300" letter-spacing="-16" fill="#17324D">erse</text>
+  <g transform="translate(350 75)">
+    <path d="M0 45 L88 0 L176 45 L88 90 Z" fill="#17324D"/>
+    <path d="M34 59 L88 87 L142 59 L142 105 Q88 143 34 105 Z" fill="#17324D"/>
+    <path d="M153 62 L153 113" stroke="#169B55" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="153" cy="126" r="10" fill="#169B55"/>
+  </g>
+</g>
+<text x="1024" y="625" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="700" letter-spacing="13" fill="#17324D">LEARN <tspan fill="#169B55">•</tspan> PRACTICE <tspan fill="#169B55">•</tspan> GROW</text>
+</svg>
