@@ -6,6 +6,7 @@ export async function POST(request: Request) {
     const secret = process.env.TURNSTILE_SECRET_KEY
 
     if (!secret) {
+      console.error('Turnstile: TURNSTILE_SECRET_KEY is missing in the server environment')
       return NextResponse.json({ ok: false, error: 'Security verification is not configured.' }, { status: 500 })
     }
     if (!token || typeof token !== 'string') {
@@ -24,11 +25,17 @@ export async function POST(request: Request) {
     const data = await result.json()
 
     if (!data.success) {
+      console.error('Turnstile verification failed', {
+        status: result.status,
+        errorCodes: data['error-codes'] || [],
+        hostname: data.hostname || null,
+      })
       return NextResponse.json({ ok: false, error: 'Security verification failed. Please try again.' }, { status: 403 })
     }
 
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (error) {
+    console.error('Turnstile verification request failed', error)
     return NextResponse.json({ ok: false, error: 'Security verification failed. Please try again.' }, { status: 400 })
   }
 }
