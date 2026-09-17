@@ -20,7 +20,7 @@ type Props = {
 
 export default function Turnstile({ onVerify, onExpire, onError }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const widgetId = useRef<string>()
+  const widgetId = useRef<string | undefined>(undefined)
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
   useEffect(() => {
