@@ -10,16 +10,16 @@ const modes = [
 ];
 
 const exams = [
-  ['JEE', 'Main + Advanced', 'bg-[#dff5e8]', 'text-[#168b50]'],
-  ['NEET', 'Medical', 'bg-[#e1f2fb]', 'text-[#1466b8]'],
-  ['CET', 'MHT-CET', 'bg-[#fff1d8]', 'text-[#e37b0b]'],
-  ['BITS', 'BITSAT', 'bg-[#f5e5f8]', 'text-[#7041c8]'],
-  ['NDA', 'Defence', 'bg-[#e8f1e9]', 'text-[#315d42]'],
-  ['NATA', 'Architecture', 'bg-[#e8f0fb]', 'text-[#426ba6]'],
-  ['RMS', 'Rashtriya Military', 'bg-[#fff0df]', 'text-[#c76d10]'],
-  ['AIS', 'AISSEE', 'bg-[#e8f5f3]', 'text-[#178476]'],
-  ['IMO', 'Olympiad', 'bg-[#f3ebff]', 'text-[#7549b7]'],
-  ['JSO', 'Junior Science', 'bg-[#edf5e8]', 'text-[#4f8a35]'],
+  ['JEE', 'Main + Advanced', '⚙', 'bg-[#dff5e8]', 'text-[#168b50]'],
+  ['NEET', 'Medical', '🩺', 'bg-[#e1f2fb]', 'text-[#1466b8]'],
+  ['CET', 'MHT-CET', '🪜', 'bg-[#fff1d8]', 'text-[#e37b0b]'],
+  ['BITS', 'BITSAT', '▣', 'bg-[#f5e5f8]', 'text-[#7041c8]'],
+  ['NDA', 'Defence', '★', 'bg-[#e8f1e9]', 'text-[#315d42]'],
+  ['NATA', 'Architecture', '⌂', 'bg-[#e8f0fb]', 'text-[#426ba6]'],
+  ['RMS', 'Rashtriya Military', '🎖', 'bg-[#fff0df]', 'text-[#c76d10]'],
+  ['AIS', 'AISSEE', '▰', 'bg-[#e8f5f3]', 'text-[#178476]'],
+  ['IMO', 'Olympiad', '🏅', 'bg-[#f3ebff]', 'text-[#7549b7]'],
+  ['JSO', 'Junior Science', '⚗', 'bg-[#edf5e8]', 'text-[#4f8a35]'],
 ];
 
 const trust = [
@@ -54,7 +54,7 @@ export default function Home() {
 
     <section className="bg-[#eaf5ff] py-9 sm:py-11"><div className="mx-auto max-w-[1180px] px-5 sm:px-8">
       <div className="flex items-center gap-4"><div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white text-xl font-black text-[#168b50] shadow-sm">GO</div><div><p className="text-xs font-black uppercase tracking-[.15em] text-[#2876c6]">Competitive preparation</p><h2 className="mt-1 text-3xl font-black tracking-[-.035em]">Prepare for <span className="text-[#168b50]">Top Competitive Exams</span></h2><p className="mt-1 text-sm font-semibold text-[#4d6277] sm:text-base">Guidance and subject support from experienced faculty.</p></div></div>
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5 lg:grid-cols-10">{exams.map(([name,sub,tone,accent])=><Link href="/subjects" key={name} className="group rounded-2xl border border-white/90 bg-white/90 p-3 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"><div className={`mx-auto grid h-14 w-14 place-items-center rounded-full ${tone} ${accent} text-sm font-black`}>{name}</div><div className="mt-3 text-xs font-black leading-4">{sub}</div></Link>)}</div>
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5 lg:grid-cols-10">{exams.map(([name,sub,icon,tone,accent])=><Link href="/subjects" key={name} className="group rounded-2xl border border-white/90 bg-white/90 p-3 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"><div className={`mx-auto grid h-14 w-14 place-items-center rounded-full ${tone} ${accent} text-xl font-black`} aria-hidden="true">{icon}</div><div className="mt-3 text-xs font-black leading-4">{sub}</div></Link>)}</div>
     </div></section>
 
     <section className="mx-auto max-w-[1180px] px-5 py-8 sm:px-8 sm:py-10"><div className="grid overflow-hidden rounded-[26px] bg-[#eef7fc] shadow-[0_8px_28px_rgba(26,55,73,.06)] md:grid-cols-[1.08fr_.92fr]"><div className="min-h-[250px] overflow-hidden md:min-h-[285px]"><img src="https://cdn5.planetspark.in/media/large_u1228994638_A_fair_young_Indian_child_around_10_years_old_stu_e5b25308_3088_4cce_b3c4_9d2225016496_1_d45af394a0.png" alt="One-to-one parent-supported learning at home" className="h-full w-full object-cover"/></div><div className="flex flex-col justify-center px-7 py-8 sm:px-10"><p className="text-xs font-black uppercase tracking-[.15em] text-[#168b50]">A managed learning experience</p><h2 className="mt-2 text-3xl font-black leading-tight text-[#183a5b]">Let’s Build<br/><span className="text-[#168b50]">A Brighter Tomorrow</span><br/>Together</h2><p className="mt-3 text-sm leading-6 text-[#53687c]">No obligation. Just a conversation about your child’s goals.</p><Link href="/demo" className="mt-5 inline-flex w-fit rounded-xl bg-[#199754] px-6 py-3.5 font-extrabold text-white shadow-md">Schedule a Free Demo Class&nbsp; →</Link></div></div></section>
