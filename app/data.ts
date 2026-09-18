@@ -9,7 +9,7 @@ export const tutors: Tutor[] = [
  {id:'t5',name:'Kabir Shah',initials:'KS',subject:'Computer Science',subjects:['Computer Science','Mathematics'],classes:['Class 9','Class 10','Class 11','Class 12'],board:'ICSE',city:'Mumbai',mode:'Online',experience:6,rating:4.7,reviews:61,price:600,bio:'Demo profile: Computer Science tutor for school students, Python fundamentals and logical thinking.',accent:'blue',exams:['BITSAT','NDA']},
  {id:'t6',name:'Ananya Rao',initials:'AR',subject:'English',subjects:['English'],classes:['Class 6','Class 7','Class 8','Class 9','Class 10'],board:'CBSE',city:'Hyderabad',mode:'Online + Offline',experience:10,rating:4.9,reviews:112,price:550,bio:'Demo profile: English language and literature teacher focused on confidence, writing and comprehension.',accent:'rose',exams:['NDA','NATA','RMS','AISSEE']},
 ];
-export const subjects = ['Mathematics','Physics','Chemistry','Biology','English','Computer Science'];
+export const subjects = ['Mathematics','Science','Physics','Chemistry','Biology','English','Computer Science'];
 export const competitiveExams = ['JEE Main','JEE Advanced','NEET','MHT-CET','BITSAT','NDA','NATA','RMS','AISSEE','IMO','JSO'];
 export const classes = ['Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8','Class 9','Class 10','Class 11','Class 12'];
 export const boards = ['CBSE','ICSE','Maharashtra State Board','IB','IGCSE'];
