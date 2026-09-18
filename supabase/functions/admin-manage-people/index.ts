@@ -86,7 +86,7 @@ Deno.serve(async (req: Request) => {
       latitude: tutor.latitude === "" || tutor.latitude == null ? null : Number(tutor.latitude), longitude: tutor.longitude === "" || tutor.longitude == null ? null : Number(tutor.longitude),
       location_accuracy_m: tutor.location_accuracy_m === "" || tutor.location_accuracy_m == null ? null : Number(tutor.location_accuracy_m),
       max_travel_km: tutor.max_travel_km === "" || tutor.max_travel_km == null ? null : Number(tutor.max_travel_km),
-      availability: clean(tutor.availability, 500) || null, grades: arr(tutor.grades), boards: arr(tutor.boards), subjects: arr(tutor.subjects), custom_subjects: arr(tutor.custom_subjects), modes: arr(tutor.modes),
+      availability: clean(tutor.availability, 500) || null, grades: arr(tutor.grades), boards: arr(tutor.boards), subjects: arr(tutor.subjects), custom_subjects: arr(tutor.custom_subjects), competitive_exams: arr(tutor.competitive_exams), modes: arr(tutor.modes),
     };
     if (typeof tutor.approved === "boolean") update.approved = tutor.approved;
     const { error } = await adminClient.from("tutors").update(update).eq("profile_id", profileId);
