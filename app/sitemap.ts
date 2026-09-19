@@ -32,13 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   for (const area of localTuitionAreas) {
-    pages.push(`/tuition/${area}`);
+    pages.push(`/tuition-in/${area}`);
   }
 
   return pages.map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : path.startsWith("/tuition/") ? 0.8 : 0.7,
+    priority: path === "" ? 1 : path.startsWith("/tuition/") || path.startsWith("/tuition-in/") ? 0.8 : 0.7,
   }));
 }
