@@ -1,11 +1,12 @@
 import type { NextConfig } from "next";
 
-// TutorVerse uses GitHub Pages only for the static preview. Vercel serves at the domain root.
+// GitHub Pages needs a static export. Vercel can use normal Next.js server routes,
+// which TutorVerse needs for secure server-side services such as LocationIQ.
 const isGitHubPages =
   process.env.GITHUB_ACTIONS === "true" && process.env.GITHUB_PAGES === "true";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  ...(isGitHubPages ? { output: "export" } : {}),
   ...(isGitHubPages ? { basePath: "/TutorVerse" } : {}),
   images: {
     unoptimized: true,
