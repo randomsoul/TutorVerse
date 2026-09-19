@@ -6,6 +6,7 @@ const boards = ["cbse", "icse", "maharashtra-state-board"];
 const juniorSubjects = ["mathematics", "science"];
 const seniorSubjects = ["mathematics", "physics", "chemistry", "biology"];
 const classes = ["6", "7", "8", "9", "10", "11", "12"];
+const localTuitionAreas = ["kharghar", "taloja", "seawoods", "nerul", "vashi", "sanpada"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
@@ -28,6 +29,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         pages.push(`/tuition/${board}/${className}/${subject}`);
       }
     }
+  }
+
+  for (const area of localTuitionAreas) {
+    pages.push(`/tuition/${area}`);
   }
 
   return pages.map((path) => ({
