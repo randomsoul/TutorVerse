@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://tutorverse.in";
+const siteUrl = "https://www.tutorverse.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -45,10 +45,7 @@ export const metadata: Metadata = {
     description:
       "School subject tuition and competitive exam preparation with home, online and batch learning options.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 const organizationSchema = {
