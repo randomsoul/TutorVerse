@@ -6,117 +6,17 @@ import { Header, Footer } from './components/site'
 import { supabase } from '../lib/supabase'
 
 type Role = 'student' | 'parent' | 'tutor' | 'manager' | 'admin'
-
-function dashboardForRole(role: string) {
-  if (role === 'admin' || role === 'staff' || role === 'manager') return '/admin'
-  if (role === 'parent') return '/parent-dashboard'
-  if (role === 'student') return '/student-dashboard'
-  if (role === 'tutor') return '/tutor-dashboard'
-  return null
-}
+function dashboardForRole(role: string) { if (role === 'admin' || role === 'staff' || role === 'manager') return '/admin'; if (role === 'parent') return '/parent-dashboard'; if (role === 'student') return '/student-dashboard'; if (role === 'tutor') return '/tutor-dashboard'; return null }
 
 function Auth({ signup = false }: { signup?: boolean }) {
-  const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
-  const [role, setRole] = useState<Role>('student')
-  const [error, setError] = useState('')
-  const [busy, setBusy] = useState(false)
-  const [done, setDone] = useState(false)
-  const [checkingSession, setCheckingSession] = useState(true)
-
-  useEffect(() => {
-    let active = true
-    const redirectIfAuthenticated = async () => {
-      const { data: sessionData } = await supabase.auth.getSession()
-      if (!active) return
-      if (!sessionData.session) {
-        setCheckingSession(false)
-        return
-      }
-      const { data: profile, error: profileError } = await supabase.from('profiles').select('role, is_active, archived_at').eq('id', sessionData.session.user.id).maybeSingle()
-      if (!active) return
-      if (profileError || !profile || profile.is_active === false || profile.archived_at) {
-        setCheckingSession(false)
-        return
-      }
-      const destination = dashboardForRole(profile.role)
-      if (destination) {
-        window.location.replace(destination)
-        return
-      }
-      setCheckingSession(false)
-    }
-    redirectIfAuthenticated()
-    return () => { active = false }
-  }, [])
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault()
-    setError('')
-    setBusy(true)
-    try {
-      if (signup && !['student', 'parent', 'tutor'].includes(role)) {
-        setError('Only Student, Parent, and Tutor accounts can be created from the public website. Manager and Saral Vigyan Admin accounts are created by Saral Vigyan.')
-        return
-      }
-      if (!email.includes('@')) {
-        setError('Please enter a valid email.')
-        return
-      }
-      if (signup) {
-        const { error: signUpError } = await supabase.auth.signUp({ email: email.trim(), password, options: { data: { full_name: name.trim(), role } } })
-        if (signUpError) throw signUpError
-        setDone(true)
-      } else {
-        const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({ email: email.trim(), password })
-        if (signInError) throw signInError
-        const { data: profile, error: profileError } = await supabase.from('profiles').select('role, is_active, archived_at').eq('id', authData.user.id).maybeSingle()
-        if (profileError || !profile) {
-          await supabase.auth.signOut()
-          throw new Error('Your TutorVerse account profile could not be verified.')
-        }
-        if (profile.is_active === false || profile.archived_at) {
-          await supabase.auth.signOut()
-          throw new Error('This account is inactive or archived. Please contact Saral Vigyan.')
-        }
-        if (role === 'admin') {
-          if (!['admin', 'staff'].includes(profile.role)) {
-            await supabase.auth.signOut()
-            throw new Error('This account is not authorised for the Saral Vigyan admin area.')
-          }
-          window.location.href = '/admin'
-          return
-        }
-        if (role === 'manager') {
-          if (profile.role !== 'manager') {
-            await supabase.auth.signOut()
-            throw new Error('This account is not authorised as a Manager.')
-          }
-          window.location.href = '/admin'
-          return
-        }
-        if (profile.role !== role) {
-          await supabase.auth.signOut()
-          throw new Error(`This account is registered as ${profile.role}, not ${role}. Please select the correct account type.`)
-        }
-        const destination = role === 'parent' ? '/parent-dashboard' : role === 'student' ? '/student-dashboard' : '/tutor-dashboard'
-        window.location.href = destination
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Authentication failed. Please try again.')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  if (done) return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><div className="auth-card"><div className="success">✓</div><h1>Check your email.</h1><p>Your TutorVerse account has been created in Supabase. If email confirmation is enabled, open the confirmation email before logging in.</p><Link href="/login" className="btn primary full">Go to login →</Link></div></main><Footer/></>
-  if (checkingSession) return <><Header/><main className="auth"><div className="auth-card"><div className="eyebrow">TutorVerse secure access</div><h1>Checking your session…</h1><p>One moment.</p></div></main><Footer/></>
-
-  const signupRoles = signup ? ['student', 'parent', 'tutor'] : ['student', 'parent', 'tutor', 'manager', 'admin']
-
-  return <><Header/><style>{`header a > span:first-child{background:#fff!important;color:#6257e8!important}`}</style><main className="auth"><form className="auth-card" onSubmit={submit}><div className="eyebrow">TutorVerse secure access</div><h1>{signup ? 'Create your account' : 'Welcome back.'}</h1><p>{signup ? 'Your account will be stored securely in TutorVerse.' : 'Sign in to your TutorVerse account.'}</p>{signup && <label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" required/></label>}<label>Account type<select value={role} onChange={e=>setRole(e.target.value as Role)}>{signupRoles.map(r => <option key={r} value={r}>{r === 'admin' ? 'Saral Vigyan Admin' : r.charAt(0).toUpperCase() + r.slice(1)}</option>)}</select></label><label>{role === 'admin' ? 'Admin email' : 'Email'}<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••••" minLength={6} required/></label>{error&&<p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn primary full" disabled={busy}>{busy ? 'Please wait…' : signup ? 'Create account →' : 'Log in →'}</button>{!signup && <p className="switch"><Link href="/forgot-password">Forgot your password?</Link></p>}<p className="switch">{signup ? 'Already have an account? ' : 'New to TutorVerse? '}<Link href={signup ? '/login' : '/signup'}>{signup ? 'Log in' : 'Create one'}</Link></p></form></main><Footer/></>
+ const [email,setEmail]=useState(''),[name,setName]=useState(''),[password,setPassword]=useState(''),[role,setRole]=useState<Role>('student'),[error,setError]=useState(''),[busy,setBusy]=useState(false),[done,setDone]=useState(false),[checkingSession,setCheckingSession]=useState(true)
+ useEffect(()=>{let active=true;const redirectIfAuthenticated=async()=>{const {data:sessionData}=await supabase.auth.getSession();if(!active)return;if(!sessionData.session){setCheckingSession(false);return}const {data:profile,error:profileError}=await supabase.from('profiles').select('role,is_active,archived_at').eq('id',sessionData.session.user.id).maybeSingle();if(!active)return;if(profileError||!profile||profile.is_active===false||profile.archived_at){setCheckingSession(false);return}const destination=dashboardForRole(profile.role);if(destination){window.location.replace(destination);return}setCheckingSession(false)};redirectIfAuthenticated();return()=>{active=false}},[])
+ async function submit(e:React.FormEvent){e.preventDefault();setError('');setBusy(true);try{if(signup&&!['student','parent','tutor'].includes(role))throw new Error('Only Student, Parent, and Tutor accounts can be created from the public website.');if(!email.includes('@'))throw new Error('Please enter a valid email.');if(signup){const {error:signUpError}=await supabase.auth.signUp({email:email.trim(),password,options:{data:{full_name:name.trim(),role}}});if(signUpError)throw signUpError;setDone(true)}else{const {data:authData,error:signInError}=await supabase.auth.signInWithPassword({email:email.trim(),password});if(signInError)throw signInError;const {data:profile,error:profileError}=await supabase.from('profiles').select('role,is_active,archived_at').eq('id',authData.user.id).maybeSingle();if(profileError||!profile){await supabase.auth.signOut();throw new Error('Your TutorVerse account profile could not be verified.')}if(profile.is_active===false||profile.archived_at){await supabase.auth.signOut();throw new Error('This account is inactive or archived. Please contact Saral Vigyan.')}if(role==='admin'){if(!['admin','staff'].includes(profile.role)){await supabase.auth.signOut();throw new Error('This account is not authorised for the Saral Vigyan admin area.')}window.location.href='/admin';return}if(role==='manager'){if(profile.role!=='manager'){await supabase.auth.signOut();throw new Error('This account is not authorised as a Manager.')}window.location.href='/admin';return}if(profile.role!==role){await supabase.auth.signOut();throw new Error(`This account is registered as ${profile.role}, not ${role}. Please select the correct account type.`)}window.location.href=role==='parent'?'/parent-dashboard':role==='student'?'/student-dashboard':'/tutor-dashboard'}}catch(err){setError(err instanceof Error?err.message:'Authentication failed. Please try again.')}finally{setBusy(false)}}
+ if(done)return <><Header/><main className="auth"><div className="auth-card"><div className="success">✓</div><p className="eyebrow">You’re almost there</p><h1>Check your email.</h1><p>Your TutorVerse account has been created securely. Open the confirmation email if email confirmation is enabled, then log in.</p><Link href="/login" className="btn primary full">Continue to login →</Link></div></main><Footer/></>
+ if(checkingSession)return <><Header/><main className="auth"><div className="auth-card"><div className="eyebrow">TutorVerse secure access</div><h1>Checking your session…</h1><p>One moment.</p></div></main><Footer/></>
+ const signupRoles=signup?['student','parent','tutor']:['student','parent','tutor','manager','admin'];
+ const roleInfo:any={student:['🎓','Student','Find learning support','School subjects, science & competitive exams'],parent:['👨‍👩‍👧','Parent','Find the right tutor','Explore tutors and manage your child’s learning'],tutor:['📚','Tutor','Teach & grow','Join the TutorVerse tutor network']}
+ return <><Header/><main className="auth"><form className="auth-card" onSubmit={submit}><div className="text-center"><div className="eyebrow">{signup?'Join TutorVerse':'TutorVerse secure access'}</div><h1>{signup?'Let’s get started.':'Welcome back.'}</h1><p>{signup?'Choose how you’ll use TutorVerse. You can update your learning journey later.':'Sign in to continue your learning journey.'}</p></div>{signup&&<div className="mt-6 grid gap-3 sm:grid-cols-3">{signupRoles.map(r=>{const i=roleInfo[r];return <button type="button" key={r} onClick={()=>setRole(r as Role)} className={`text-left rounded-2xl border-2 p-4 transition ${role===r?'border-[#1d4ed8] bg-blue-50 shadow-md':'border-slate-200 bg-white hover:border-blue-200 hover:shadow-sm'}`}><div className="text-2xl">{i[0]}</div><div className="mt-2 font-black text-slate-900">{i[1]}</div><div className="mt-1 text-xs font-bold text-blue-700">{i[2]}</div><div className="mt-1 text-xs leading-5 text-slate-500">{i[3]}</div></button>})}</div>}{signup&&<div className="mt-5 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600"><b className="text-slate-900">Great choice.</b> {role==='student'?'Tell us who you are and we’ll help you get started.':role==='parent'?'Create an account to organise tutoring for your child.':'Share your teaching strengths and preferred location so Saral Vigyan can review your application.'}</div>}<div className="mt-6 space-y-4">{signup&&<label>Name<input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" required/></label>}{!signup&&<label>Account type<select value={role} onChange={e=>setRole(e.target.value as Role)}>{signupRoles.map(r=><option key={r} value={r}>{r==='admin'?'Saral Vigyan Admin':r.charAt(0).toUpperCase()+r.slice(1)}</option>)}</select></label>}<label>{role==='admin'?'Admin email':'Email'}<input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></label><label>Password<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Create a secure password" minLength={6} required/></label></div>{error&&<p className="mt-4 rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn primary full mt-5" disabled={busy}>{busy?'Please wait…':signup?'Create my account →':'Log in →'}</button>{signup&&<p className="mt-3 text-center text-xs text-slate-400">By creating an account, you agree to TutorVerse’s terms and privacy policy.</p>}{!signup&&<p className="switch"><Link href="/forgot-password">Forgot your password?</Link></p>}<p className="switch">{signup?'Already have an account? ':'New to TutorVerse? '}<Link href={signup?'/login':'/signup'}>{signup?'Log in':'Create one'}</Link></p></form></main><Footer/></>
 }
-
-export function Login() { return <Auth /> }
-export function Signup() { return <Auth signup /> }
+export function Login(){return <Auth/>}
+export function Signup(){return <Auth signup/>}
