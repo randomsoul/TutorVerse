@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin/", "/api/"],
     },
-    sitemap: "https://tutorverse.in/sitemap.xml",
+    sitemap: "https://www.tutorverse.in/sitemap.xml",
   };
 }
