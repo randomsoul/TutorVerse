@@ -43,7 +43,7 @@ export async function generateMetadata({
   const subjectName = subjectNames[subject];
   if (!boardName || !subjectName || !classes.includes(className as (typeof classes)[number])) return {};
   return {
-    title: `Class ${className} ${subjectName} Tuition | ${boardName} | TutorVerse`,
+    title: { absolute: `Class ${className} ${subjectName} Tuition | ${boardName} | TutorVerse` },
     description: `Find Class ${className} ${subjectName} tuition for ${boardName} students in India. Explore home, online and batch tuition with TutorVerse.`,
     alternates: { canonical: `/tuition/${board}/${className}/${subject}` },
     openGraph: {
